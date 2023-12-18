@@ -1,9 +1,3 @@
-git init
-git add .
-git commit -m "První commit"
-
-
-
 CREATE OR REPLACE TABLE t_Marek_Sykora_project_SQL_primary_final
 
 
