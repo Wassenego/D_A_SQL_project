@@ -29,7 +29,7 @@ ORDER BY f.`year`, s.industry_code, f.food_name
 
 CREATE OR REPLACE TABLE t_Marek_Sykora_project_SQL_secondary_final;
 
-
+-- 1.dotaz - Rostou v průběhu let mzdy ve všech odvětvích, nebo v některých klesají?
 SELECT ms1.industry_branch,
 	ms1.`year` AS previous_year,
 	ms2.`year` AS next_year,
@@ -40,21 +40,76 @@ SELECT ms1.industry_branch,
 		ELSE 'Průměrný plat klesl'
 	END AS salary_evaluation	
 FROM (
-	SELECT ms.`year`,
-		ms.industry_code,
+	SELECT ms.industry_code,
 		ms.industry_branch,
+		ms.`year`,
 		ms.average_salary
 	FROM t_marek_sykora_project_sql_primary_final ms
-	GROUP BY ms.`year`, ms.industry_code 
+	GROUP BY ms.`year`, ms.industry_code
+	ORDER BY ms.industry_code, ms.`year` 
 	) AS ms1
 JOIN (
-	SELECT ms.`year`,
-		ms.industry_code,
+	SELECT ms.industry_code,
 		ms.industry_branch,
+		ms.`year`,
 		ms.average_salary
 	FROM t_marek_sykora_project_sql_primary_final ms
-	GROUP BY ms.`year`, ms.industry_code 
+	GROUP BY ms.`year`, ms.industry_code
+	ORDER BY ms.industry_code, ms.`year` 
 	) AS ms2 
-	ON (ms1.`year` + 1) = ms2.`year` 
+	ON (ms1.`year` + 1) = ms2.`year` AND ms1.industry_code = ms2.industry_code 
 ORDER BY ms1.industry_code, ms1.`year`
 ;
+
+-- 1.dotaz 	- Rostou v průběhu let mzdy ve všech odvětvích, nebo v některých klesají?
+-- 			- konkrétní specifikace odvětví a roků, kdy mzdy klesly
+
+SELECT sd.industry_branch,
+	sd.next_year AS year_of_decreased_avg_salary
+FROM (
+	SELECT ms1.industry_branch,
+		ms1.`year` AS previous_year,
+		ms2.`year` AS next_year,
+		CONCAT(ms1.average_salary,' Kč') AS previous_year_salary,
+		CONCAT(ms2.average_salary,' Kč') AS next_year_salary,
+		CASE 
+			WHEN ms1.average_salary < ms2.average_salary THEN 1
+			ELSE 0
+		END AS salary_evaluation	
+	FROM (
+		SELECT ms.industry_code,
+			ms.industry_branch,
+			ms.`year`,
+			ms.average_salary
+		FROM t_marek_sykora_project_sql_primary_final ms
+		GROUP BY ms.`year`, ms.industry_code
+		ORDER BY ms.industry_code, ms.`year` 
+		) AS ms1
+	JOIN (
+		SELECT ms.industry_code,
+			ms.industry_branch,
+			ms.`year`,
+			ms.average_salary
+		FROM t_marek_sykora_project_sql_primary_final ms
+		GROUP BY ms.`year`, ms.industry_code
+		ORDER BY ms.industry_code, ms.`year` 
+		) AS ms2 
+		ON (ms1.`year` + 1) = ms2.`year` AND ms1.industry_code = ms2.industry_code 
+	ORDER BY ms1.industry_code, ms1.`year`
+	) AS sd
+WHERE sd.salary_evaluation = 0
+ORDER BY year_of_decreased_avg_salary, sd.industry_branch
+;
+
+-- 2.dotaz 	Kolik je možné si koupit litrů mléka a kilogramů chleba za první a poslední srovnatelné období v dostupných datech cen a mezd?
+-- 			Verze, kdy ponechám všechny záznamy v řádcích
+SELECT ms.`year`,
+	ms.industry_branch,
+	ms.food_name
+FROM t_marek_sykora_project_sql_primary_final ms
+WHERE ms.`year` = (SELECT MIN(ms.`year`) FROM t_marek_sykora_project_sql_primary_final) 
+	-- OR ms.`year` = (SELECT MAX(ms.`year`) FROM t_marek_sykora_project_sql_primary_final)
+	-- AND ms.food_name IN ('Chléb konzumní kmínový', 'Mléko polotučné pasterované')
+ORDER BY industry_branch;
+
+SELECT MIN(ms.`year`) FROM t_marek_sykora_project_sql_primary_final ms;
