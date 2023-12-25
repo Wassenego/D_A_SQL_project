@@ -148,7 +148,6 @@ ORDER BY ms.industry_branch, ms.`year`;
 
 
 
-SELECT MIN(ms.`year`) FROM t_marek_sykora_project_sql_primary_final ms;
 
 
 
