@@ -102,14 +102,64 @@ ORDER BY year_of_decreased_avg_salary, sd.industry_branch
 ;
 
 -- 2.dotaz 	Kolik je možné si koupit litrů mléka a kilogramů chleba za první a poslední srovnatelné období v dostupných datech cen a mezd?
--- 			Verze, kdy ponechám všechny záznamy v řádcích
+-- 			Verze, kdy ponechám potraviny v řádcích - není tak přehledná
 SELECT ms.`year`,
 	ms.industry_branch,
-	ms.food_name
+	ms.average_salary AS avg_salary,
+	ms.food_name,
+	ms.average_price AS avg_price,
+	CONCAT(ROUND(ms.average_salary / ms.average_price, 0),' ', ms.price_unit) AS amount_in_avg_salary
 FROM t_marek_sykora_project_sql_primary_final ms
-WHERE ms.`year` = (SELECT MIN(ms.`year`) FROM t_marek_sykora_project_sql_primary_final) 
-	-- OR ms.`year` = (SELECT MAX(ms.`year`) FROM t_marek_sykora_project_sql_primary_final)
-	-- AND ms.food_name IN ('Chléb konzumní kmínový', 'Mléko polotučné pasterované')
-ORDER BY industry_branch;
+WHERE (ms.`year` = (SELECT MIN(ms1.`year`) FROM t_marek_sykora_project_sql_primary_final ms1) 
+	OR ms.`year` = (SELECT MAX(ms2.`year`) FROM t_marek_sykora_project_sql_primary_final ms2))
+	AND (ms.food_name LIKE 'Mléko%' OR ms.food_name LIKE 'Chléb%')
+ORDER BY ms.industry_branch, ms.food_name;
+
+-- 2.dotaz 	Kolik je možné si koupit litrů mléka a kilogramů chleba za první a poslední srovnatelné období v dostupných datech cen a mezd?
+-- 			Verze, kdy transponuji potraviny do sloupců
+SELECT ms.`year`,
+	ms.industry_branch,
+	ms.average_salary AS avg_salary,
+	CASE 
+		WHEN ms.food_name LIKE 'Chléb%' THEN ms.average_price
+	END AS bread_price,
+	CONCAT(ROUND(ms.average_salary / ms.average_price, 0),' ', ms.price_unit) AS amount_in_avg_salary,
+	m.milk_price,
+	m.amount_in_avg_salary
+FROM t_marek_sykora_project_sql_primary_final ms
+JOIN (
+	SELECT ms.`year`,
+		ms.industry_branch,
+		ms.average_salary AS avg_salary,
+		CASE 
+			WHEN ms.food_name LIKE 'Mléko%' THEN ms.average_price
+		END AS milk_price,
+		CONCAT(ROUND(ms.average_salary / ms.average_price, 0),' ', ms.price_unit) AS amount_in_avg_salary
+	FROM t_marek_sykora_project_sql_primary_final ms
+	WHERE (ms.`year` = (SELECT MIN(ms1.`year`) FROM t_marek_sykora_project_sql_primary_final ms1) 
+		OR ms.`year` = (SELECT MAX(ms2.`year`) FROM t_marek_sykora_project_sql_primary_final ms2))
+		AND ms.food_name LIKE 'Mléko%'
+	ORDER BY ms.industry_branch
+	) AS m ON ms.`year` = m.`year` AND ms.industry_branch = m.industry_branch AND ms.average_salary = m.avg_salary
+WHERE (ms.`year` = (SELECT MIN(ms1.`year`) FROM t_marek_sykora_project_sql_primary_final ms1) 
+	OR ms.`year` = (SELECT MAX(ms2.`year`) FROM t_marek_sykora_project_sql_primary_final ms2))
+	AND ms.food_name LIKE 'Chléb%'
+ORDER BY ms.industry_branch, ms.`year`;
+
+
 
 SELECT MIN(ms.`year`) FROM t_marek_sykora_project_sql_primary_final ms;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
