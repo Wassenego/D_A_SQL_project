@@ -30,7 +30,6 @@ ORDER BY f.`year`, s.industry_code, f.food_name
 CREATE OR REPLACE TABLE t_Marek_Sykora_project_SQL_secondary_final;
 
 -- 1.dotaz - Rostou v průběhu let mzdy ve všech odvětvích, nebo v některých klesají?
-
 SELECT ms1.industry_branch,
 	ms1.`year` AS previous_year,
 	ms2.`year` AS next_year,
@@ -64,7 +63,6 @@ ORDER BY ms1.industry_code, ms1.`year`
 
 -- 1.dotaz 	- Rostou v průběhu let mzdy ve všech odvětvích, nebo v některých klesají?
 -- 			- konkrétní specifikace odvětví a roků, kdy mzdy klesly
-
 SELECT sd.industry_branch,
 	sd.next_year AS year_of_decreased_avg_salary
 FROM (
@@ -160,13 +158,17 @@ JOIN (
 		ms.food_name,
 		ms.average_price
 	FROM t_marek_sykora_project_sql_primary_final ms
-	GROUP BY ms.food_name, ms.`year`
-	ORDER BY ms.food_name, ms.`year` 
-	) AS ms2 
-	ON ms1.`year` = ms2.`year` - 1 AND ms1.food_name = ms2.food_name 
-GROUP BY ms1.food_name, ms1.`year`
-ORDER BY ms1.food_name, ms1.`year`
-;*/
+	GROUP BY ms.food_name, 
+		ms.`year`
+	ORDER BY ms.food_name, 
+		ms.`year` 
+) AS ms2 ON ms1.`year` = ms2.`year` - 1 
+		AND ms1.food_name = ms2.food_name 
+GROUP BY ms1.food_name, 
+	ms1.`year`
+ORDER BY ms1.food_name, 
+	ms1.`year`
+;
 
 -- 3.Dotaz 	- Která kategorie potravin zdražuje nejpomaleji (je u ní nejnižší percentuální meziroční nárůst)?
 -- 			- verze, která vytvoří a seřadí průměrný percentuální meziroční nárůst ve srovnatelné období v dostupných datech cen potravin
@@ -178,23 +180,99 @@ JOIN (
 		ms.food_name,
 		ms.average_price
 	FROM t_marek_sykora_project_sql_primary_final ms
-	GROUP BY ms.food_name, ms.`year`
-	ORDER BY ms.food_name, ms.`year` 
-	) AS ms2 
-	ON ms1.`year` = ms2.`year` - 1 AND ms1.food_name = ms2.food_name 
+	GROUP BY ms.food_name, 
+		ms.`year`
+	ORDER BY ms.food_name, 
+		ms.`year` 
+	) AS ms2 ON ms1.`year` = ms2.`year` - 1 
+		AND ms1.food_name = ms2.food_name 
 GROUP BY ms1.food_name
 ORDER BY avg_growth_rate
 ; 
 
-	
+-- 4.Dotaz 	- Existuje rok, ve kterém byl meziroční nárůst cen potravin výrazně vyšší než růst mezd (větší než 10 %)?
+-- 			- verze, kdy porovnáváme meziroční nárůst cen potravin s meziročním nárůstem platů každého odvětví zvlášť
+SELECT tms.current_year AS `year`,
+	tms.food_name,
+	tms.food_growth_rate,
+	tms.industry_branch,
+	tms.salary_growth_rate,
+	tms.rate_diff
+FROM (
+	SELECT ms1.food_name,
+		ms1.`year` AS previous_year,
+		ms1.average_price AS avg_price_previous,
+		ms2.`year` AS current_year,
+		ms2.average_price AS avg_price_current,
+		ROUND(ms2.average_price / ms1.average_price * 100 - 100, 2) AS food_growth_rate,
+		ms1.industry_branch,
+		ms1.average_salary AS avg_salary_previous,
+		ms2.average_salary AS avg_salary_current,
+		ROUND(ms2.average_salary / ms1.average_salary * 100 - 100, 2) AS salary_growth_rate,
+		ROUND(ms2.average_price / ms1.average_price * 100 - ms2.average_salary / ms1.average_salary * 100, 2) AS rate_diff
+	FROM t_marek_sykora_project_sql_primary_final ms1
+	JOIN (
+		SELECT ms.`year`,
+			ms.food_name,
+			ms.average_price,
+			ms.industry_branch,
+			ms.average_salary 
+		FROM t_marek_sykora_project_sql_primary_final ms
+		ORDER BY ms.food_name, 
+			ms.`year` 
+	) AS ms2 ON ms1.`year` = ms2.`year` - 1 
+		AND ms1.food_name = ms2.food_name 
+		AND ms1.industry_branch = ms2.industry_branch
+	GROUP BY ms1.food_name, 
+		ms1.`year`, 
+		ms1.industry_branch 
+	ORDER BY ms1.food_name, 
+		ms1.`year`
+) AS tms
+WHERE tms.rate_diff >= 10
+ORDER BY rate_diff DESC;
+;
 
-
-
-
-
-
-
-
+-- 4.Dotaz 	- Existuje rok, ve kterém byl meziroční nárůst cen potravin výrazně vyšší než růst mezd (větší než 10 %)?
+-- 			- verze, kdy porovnáváme meziroční nárůst cen potraviny s průměrným meziročním nárůstem platu všech odvětví dohromady
+SELECT tms.current_year AS `year`,
+	tms.food_name,
+	tms.food_growth_rate,
+	ROUND(AVG(tms.salary_growth_rate), 2) AS avg_salary_growth_rate,
+	ROUND(AVG(tms.rate_diff), 2) AS avg_rate_diff
+FROM (
+	SELECT ms1.food_name,
+		ms1.`year` AS previous_year,
+		ms1.average_price AS avg_price_previous,
+		ms2.`year` AS current_year,
+		ms2.average_price AS avg_price_current,
+		ROUND(ms2.average_price / ms1.average_price * 100 - 100, 2) AS food_growth_rate,
+		ms1.industry_branch,
+		ms1.average_salary AS avg_salary_previous,
+		ms2.average_salary AS avg_salary_current,
+		ROUND(ms2.average_salary / ms1.average_salary * 100 - 100, 2) AS salary_growth_rate,
+		ROUND(ms2.average_price / ms1.average_price * 100 - ms2.average_salary / ms1.average_salary * 100, 2) AS rate_diff
+	FROM t_marek_sykora_project_sql_primary_final ms1
+	JOIN (
+		SELECT ms.`year`,
+			ms.food_name,
+			ms.average_price,
+			ms.industry_branch,
+			ms.average_salary 
+		FROM t_marek_sykora_project_sql_primary_final ms
+		ORDER BY ms.food_name, ms.`year` 
+	) AS ms2 ON ms1.`year` = ms2.`year` - 1 
+		AND ms1.food_name = ms2.food_name 
+		AND ms1.industry_branch = ms2.industry_branch
+	GROUP BY ms1.food_name, ms1.`year`, 
+		ms1.industry_branch 
+	ORDER BY ms1.food_name, ms1.`year`
+	) AS tms
+WHERE tms.rate_diff >= 10
+GROUP BY `year`, tms.food_name,
+	tms.food_growth_rate
+ORDER BY avg_rate_diff DESC
+;
 
 
 
