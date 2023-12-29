@@ -27,7 +27,15 @@ JOIN (
 ORDER BY f.`year`, s.industry_code, f.food_name
 ;
 
-CREATE OR REPLACE TABLE t_Marek_Sykora_project_SQL_secondary_final;
+CREATE OR REPLACE TABLE t_Marek_Sykora_project_SQL_secondary_final
+SELECT e.`year`,
+	e.GDP,
+	e.population
+FROM economies e
+WHERE country = 'Czech Republic'
+	AND `year` BETWEEN 2006 AND 2018
+ORDER BY `year`
+;
 
 -- 1.dotaz - Rostou v průběhu let mzdy ve všech odvětvích, nebo v některých klesají?
 SELECT ms1.industry_branch,
@@ -62,7 +70,7 @@ ORDER BY ms1.industry_code, ms1.`year`
 ;
 
 -- 1.dotaz 	- Rostou v průběhu let mzdy ve všech odvětvích, nebo v některých klesají?
--- 			- konkrétní specifikace odvětví a roků, kdy mzdy klesly
+-- 			- výpis odvětví a roků, kdy mzdy klesly
 SELECT sd.industry_branch,
 	sd.next_year AS year_of_decreased_avg_salary
 FROM (
@@ -272,6 +280,57 @@ WHERE tms.rate_diff >= 10
 GROUP BY `year`, tms.food_name,
 	tms.food_growth_rate
 ORDER BY avg_rate_diff DESC
+;
+
+-- 5.Dotaz 	- Má výška HDP vliv na změny ve mzdách a cenách potravin? Neboli, pokud HDP vzroste výrazněji v jednom roce, projeví se to na cenách potravin či mzdách ve stejném nebo násdujícím roce výraznějším růstem?
+-- 			- 1.verze - s použitím předchozích dotazů
+SELECT tms.current_year AS `year`,
+	ROUND(AVG(tms.food_growth_rate), 2) AS avg_food_growth_rate,
+	ROUND(AVG(tms.salary_growth_rate), 2) AS avg_salary_growth_rate,
+	tms2.GDP_growth_rate
+FROM (
+	SELECT ms1.food_name,
+		ms1.`year` AS previous_year,
+		ms1.average_price AS avg_price_previous,
+		ms2.`year` AS current_year,
+		ms2.average_price AS avg_price_current,
+		ROUND(ms2.average_price / ms1.average_price * 100 - 100, 2) AS food_growth_rate,
+		ms1.industry_branch,
+		ms1.average_salary AS avg_salary_previous,
+		ms2.average_salary AS avg_salary_current,
+		ROUND(ms2.average_salary / ms1.average_salary * 100 - 100, 2) AS salary_growth_rate,
+		ROUND(ms2.average_price / ms1.average_price * 100 - ms2.average_salary / ms1.average_salary * 100, 2) AS rate_diff
+	FROM t_marek_sykora_project_sql_primary_final ms1
+	JOIN (
+		SELECT ms.`year`,
+			ms.food_name,
+			ms.average_price,
+			ms.industry_branch,
+			ms.average_salary 
+		FROM t_marek_sykora_project_sql_primary_final ms
+		ORDER BY ms.food_name, ms.`year` 
+	) AS ms2 ON ms1.`year` = ms2.`year` - 1 
+		AND ms1.food_name = ms2.food_name 
+		AND ms1.industry_branch = ms2.industry_branch
+	GROUP BY ms1.food_name, ms1.`year`, 
+		ms1.industry_branch 
+	ORDER BY ms1.food_name, ms1.`year`
+) AS tms
+JOIN (
+	SELECT tmss.current_year AS `year`,
+		ROUND(tmss.current_year_GDP / tmss.previous_year_GDP * 100 - 100, 2) AS GDP_growth_rate
+	FROM (
+		SELECT tms1.`year` AS previous_year,
+			tms1.GDP AS previous_year_GDP,
+			tms2.`year` AS current_year,
+			tms2.GDP AS current_year_GDP
+		FROM t_marek_sykora_project_sql_secondary_final tms1
+	JOIN t_marek_sykora_project_sql_secondary_final tms2 
+	ON tms2.`year` - 1 = tms1.`year`
+	) AS tmss
+) AS tms2 ON tms2.`year` = tms.current_year
+GROUP BY `year`
+ORDER BY `year`
 ;
 
 
