@@ -1,3 +1,4 @@
+-- Vytvoření první tabulky
 CREATE OR REPLACE TABLE t_Marek_Sykora_project_SQL_primary_final AS
 SELECT f.*,
 	s.industry_code,
@@ -35,6 +36,7 @@ ORDER BY f.`year`,
 	f.food_name
 ;
 
+-- Vytvoření druhé tabulky
 CREATE OR REPLACE TABLE t_Marek_Sykora_project_SQL_secondary_final
 SELECT e.`year`,
 	e.GDP,
@@ -45,7 +47,8 @@ WHERE country = 'Czech Republic'
 ORDER BY `year`
 ;
 
--- 1.dotaz - Rostou v průběhu let mzdy ve všech odvětvích, nebo v některých klesají?
+-- 1.dotaz - 	Rostou v průběhu let mzdy ve všech odvětvích, nebo v některých klesají?
+-- 		Varianta s výpisem všech kombinací a se slovním hodnocením  	    	
 SELECT ms1.industry_branch,
 	ms2.`year` AS `year`,
 	CONCAT(ms1.average_salary,' Kč') AS previous_year_salary,
@@ -81,8 +84,8 @@ ORDER BY ms1.industry_code,
 	ms1.`year`
 ;
 
--- 1.dotaz 	- Rostou v průběhu let mzdy ve všech odvětvích, nebo v některých klesají?
--- 			- výpis odvětví a roků, kdy mzdy klesly
+-- 1.dotaz - 	Rostou v průběhu let mzdy ve všech odvětvích, nebo v některých klesají?
+-- 		Výpis pouze odvětví a roků, kdy mzdy klesly
 SELECT sd.industry_branch,
 	sd.next_year AS year_of_decreased_avg_salary
 FROM (
@@ -121,8 +124,8 @@ ORDER BY year_of_decreased_avg_salary,
 	sd.industry_branch
 ;
 
--- 2.dotaz 	Kolik je možné si koupit litrů mléka a kilogramů chleba za první a poslední srovnatelné období v dostupných datech cen a mezd?
--- 			Verze, kdy ponechám potraviny v řádcích - není tak přehledná
+-- 2.dotaz - 	Kolik je možné si koupit litrů mléka a kilogramů chleba za první a poslední srovnatelné období v dostupných datech cen a mezd?
+-- 		Verze, kdy ponechám potraviny v řádcích - není tak přehledná, speciálně, pokud by se přidávaly další potraviny
 SELECT ms.`year`,
 	ms.industry_branch,
 	ms.average_salary AS avg_salary,
@@ -136,8 +139,8 @@ WHERE (ms.`year` = (SELECT MIN(ms1.`year`) FROM t_marek_sykora_project_sql_prima
 ORDER BY ms.industry_branch, 
 	ms.food_name;
 
--- 2.dotaz 	Kolik je možné si koupit litrů mléka a kilogramů chleba za první a poslední srovnatelné období v dostupných datech cen a mezd?
--- 			Verze, kdy transponuji potraviny do sloupců
+-- 2.dotaz - 	Kolik je možné si koupit litrů mléka a kilogramů chleba za první a poslední srovnatelné období v dostupných datech cen a mezd?
+-- 		Verze, kdy transponuji potraviny do sloupců
 SELECT ms.`year`,
 	ms.industry_branch,
 	ms.average_salary AS avg_salary,
@@ -171,8 +174,8 @@ ORDER BY ms.industry_branch,
 	ms.`year`
 ;
 
--- 3.Dotaz 	- Která kategorie potravin zdražuje nejpomaleji (je u ní nejnižší percentuální meziroční nárůst)?
---			- verze s percentuálním meziročním nárůstem jednotlivých potravin pro každý rok - ke kontrole
+-- 3.dotaz - 	Která kategorie potravin zdražuje nejpomaleji (je u ní nejnižší percentuální meziroční nárůst)?
+--		Verze s percentuálním meziročním nárůstem jednotlivých potravin pro každý rok - ke kontrole
 SELECT ms1.food_name,
 	ms1.`year` AS previous_year,
 	ms2.`year` AS current_year,
@@ -196,8 +199,8 @@ ORDER BY ms1.food_name,
 	ms1.`year`
 ;
 
--- 3.Dotaz 	- Která kategorie potravin zdražuje nejpomaleji (je u ní nejnižší percentuální meziroční nárůst)?
--- 			- verze, která vytvoří a seřadí průměrný percentuální meziroční nárůst ve srovnatelné období v dostupných datech cen potravin
+-- 3.dotaz - 	Která kategorie potravin zdražuje nejpomaleji (je u ní nejnižší percentuální meziroční nárůst)?
+-- 		Verze, která vytvoří a seřadí průměrný percentuální meziroční nárůst ve srovnatelné období v dostupných datech cen potravin
 SELECT ms1.food_name,
 	ROUND(AVG(ms2.average_price / ms1.average_price * 100 - 100), 2) AS avg_growth_rate
 FROM t_marek_sykora_project_sql_primary_final ms1
@@ -216,8 +219,8 @@ GROUP BY ms1.food_name
 ORDER BY avg_growth_rate
 ; 
 
--- 4.Dotaz 	- Existuje rok, ve kterém byl meziroční nárůst cen potravin výrazně vyšší než růst mezd (větší než 10 %)?
--- 			- verze, kdy porovnáváme meziroční nárůst cen potravin s meziročním nárůstem platů každého odvětví zvlášť
+-- 4.dotaz - 	Existuje rok, ve kterém byl meziroční nárůst cen potravin výrazně vyšší než růst mezd (větší než 10 %)?
+-- 		Verze, kdy porovnáváme meziroční nárůst cen potravin s meziročním nárůstem platů každého odvětví zvlášť
 SELECT tms.current_year AS `year`,
 	tms.food_name,
 	tms.food_growth_rate,
@@ -259,8 +262,8 @@ WHERE tms.rate_diff >= 10
 ORDER BY rate_diff DESC;
 ;
 
--- 4.Dotaz 	- Existuje rok, ve kterém byl meziroční nárůst cen potravin výrazně vyšší než růst mezd (větší než 10 %)?
--- 			- verze, kdy porovnáváme meziroční nárůst cen potraviny s průměrným meziročním nárůstem platu všech odvětví dohromady
+-- 4.dotaz - 	Existuje rok, ve kterém byl meziroční nárůst cen potravin výrazně vyšší než růst mezd (větší než 10 %)?
+-- 		Verze, kdy porovnáváme meziroční nárůst cen potraviny s průměrným meziročním nárůstem platu všech odvětví dohromady
 SELECT tms.current_year AS `year`,
 	tms.food_name,
 	tms.food_growth_rate,
@@ -301,7 +304,7 @@ GROUP BY `year`,
 ORDER BY avg_rate_diff DESC
 ;
 
--- 5.Dotaz 	- Má výška HDP vliv na změny ve mzdách a cenách potravin? Neboli, pokud HDP vzroste výrazněji v jednom roce, projeví se to na cenách potravin či mzdách ve stejném nebo následujícím roce výraznějším růstem?
+-- 5.dotaz - 	Má výška HDP vliv na změny ve mzdách a cenách potravin? Neboli, pokud HDP vzroste výrazněji v jednom roce, projeví se to na cenách potravin či mzdách ve stejném nebo následujícím roce výraznějším růstem?
 SELECT tms.current_year AS `year`,
 	ROUND(AVG(tms.food_growth_rate), 2) AS avg_food_growth_rate,
 	ROUND(AVG(tms.salary_growth_rate), 2) AS avg_salary_growth_rate,
