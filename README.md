@@ -3,7 +3,7 @@ Datová akademie: 26. 10. 2023 - 25. 1. 2024
 Vypracoval: Marek Sýkora
 
 ## Úvod do projektu:
-Na analytickém oddělení nezávislé společnosti, specializující se na hodnocení životní úrovně občanů, jsme se rozhodli provést analýzu, která nám poskytne odpovědi na klíčové výzkumné otázky související s dostupností základních potravin. Tyto otázky budou sloužit jako podklad pro prezentaci výsledků na konferenci zaměřené na danou oblast.
+Na analytickém oddělení naší nezávislé společnosti, která se zabývá životní úrovní občanů, jsme se dohodli, že se pokusíme odpovědět na pár definovaných výzkumných otázek, které adresují dostupnost základních potravin široké veřejnosti. Kolegové vydefinovali základní otázky, na které se pokusí odpovědět a poskytnout tuto informaci tiskovému oddělení. Toto oddělení bude výsledky prezentovat na následující konferenci zaměřené na tuto oblast.
 
 ## Data pro analýzu:
 Pro získání relevantních dat jsme k dispozici měli několik datových sad, včetně informací o mzdách v různých odvětvích _(czechia_payroll)_, cenách vybraných potravin (czechia_price), demografických údajích o regionech a okresech v České republice (czechia_region, czechia_district), a dalších mezinárodních informacích o státech světa (countries, economies).
@@ -12,8 +12,8 @@ Podmínkou bylo neprovádět změny v primárních tabulkách. Transformace hodn
 ## Výstup projektu:
 Výstupem projektu jsou dvě klíčové tabulky v databázi:
 
-`t_Marek_Sykora_project_SQL_primary_final`: Obsahuje data mezd a cen potravin za Českou republiku sjednocená na totožné porovnatelné období – společné roky.
-`t_Marek_Sykora_project_SQL_secondary_final`: Obsahuje dodatečná data o HDP a populaci v České republice z období shodujícím se s předchozí tabulkou.
+`t_Marek_Sykora_project_SQL_primary_final`: Obsahuje data mezd a cen potravin za Českou republiku sjednocená na totožné porovnatelné období – společné roky.  
+`t_Marek_Sykora_project_SQL_secondary_final`: Obsahuje dodatečná data o HDP, gini a populaci v evropských státech z období shodujícím se s předchozí tabulkou.
 
 ## SQL Skript a Repozitář na GitHubu:
 Celkové SQL skripty, včetně průvodní dokumentace a popisu mezivýsledků, jsou k dispozici v repozitáři na GitHubu. Repozitář slouží ke správě a dokumentaci projektu a je dostupný na následujícím odkazu:  (https://github.com/Wassenego/D_A_SQL_project/blob/main/SQL_project.sql).
