@@ -249,14 +249,14 @@ FROM (
 		ms2.average_salary AS avg_salary_current,
 		ROUND(ms2.average_salary / ms1.average_salary * 100 - 100, 2) AS salary_growth_rate,
 		ROUND(ms2.average_price / ms1.average_price * 100 - ms2.average_salary / ms1.average_salary * 100, 2) AS rate_diff
-	FROM t_marek_sykora_project_sql_primary_final ms1
+	FROM t_Marek_Sykora_project_SQL_primary_final ms1
 	JOIN (
 		SELECT ms.`year`,
 			ms.food_name,
 			ms.average_price,
 			ms.industry_branch,
 			ms.average_salary 
-		FROM t_marek_sykora_project_sql_primary_final ms
+		FROM t_Marek_Sykora_project_SQL_primary_final ms
 		ORDER BY ms.food_name, 
 			ms.`year` 
 	) ms2 ON ms1.`year` = ms2.`year` - 1 
@@ -268,7 +268,7 @@ FROM (
 	ORDER BY ms1.food_name, 
 		ms1.`year`
 ) tms
-WHERE tms.rate_diff >= 10
+HAVING tms.rate_diff >= 10
 ORDER BY rate_diff DESC;
 ;
 
@@ -291,26 +291,28 @@ FROM (
 		ms2.average_salary AS avg_salary_current,
 		ROUND(ms2.average_salary / ms1.average_salary * 100 - 100, 2) AS salary_growth_rate,
 		ROUND(ms2.average_price / ms1.average_price * 100 - ms2.average_salary / ms1.average_salary * 100, 2) AS rate_diff
-	FROM t_marek_sykora_project_sql_primary_final ms1
+	FROM t_Marek_Sykora_project_SQL_primary_final ms1
 	JOIN (
 		SELECT ms.`year`,
 			ms.food_name,
 			ms.average_price,
 			ms.industry_branch,
 			ms.average_salary 
-		FROM t_marek_sykora_project_sql_primary_final ms
+		FROM t_Marek_Sykora_project_SQL_primary_final ms
 		ORDER BY ms.food_name, ms.`year` 
 	) ms2 ON ms1.`year` = ms2.`year` - 1 
 		AND ms1.food_name = ms2.food_name 
 		AND ms1.industry_branch = ms2.industry_branch
-	GROUP BY ms1.food_name, ms1.`year`, 
+	GROUP BY ms1.food_name, 
+		ms1.`year`, 
 		ms1.industry_branch 
-	ORDER BY ms1.food_name, ms1.`year`
-	) tms
-WHERE tms.rate_diff >= 10
+	ORDER BY ms1.food_name, 
+	ms1.`year`
+) tms
 GROUP BY `year`, 
 	tms.food_name,
 	tms.food_growth_rate
+HAVING avg_rate_diff >= 10
 ORDER BY avg_rate_diff DESC
 ;
 
@@ -348,9 +350,9 @@ FROM (
 		ms1.industry_branch 
 	ORDER BY ms1.food_name, ms1.`year`
 	) tms
-WHERE tms.rate_diff >= 10
 GROUP BY `year`, 
 	tms.food_growth_rate
+HAVING avg_rate_diff >= 10
 ORDER BY avg_rate_diff DESC
 ;
 
