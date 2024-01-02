@@ -95,9 +95,11 @@ ORDER BY ms1.industry_code,
 -- 1.dotaz - 	Rostou v průběhu let mzdy ve všech odvětvích, nebo v některých klesají?
 -- 		Výpis pouze odvětví a roků, kdy mzdy klesly
 SELECT sd.industry_branch,
+	sd.industry_code,
 	sd.next_year AS year_of_decreased_avg_salary
 FROM (
 	SELECT ms1.industry_branch,
+		ms1.industry_code,
 		ms1.`year` AS previous_year,
 		ms2.`year` AS next_year,
 		CASE 
