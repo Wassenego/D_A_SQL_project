@@ -48,8 +48,8 @@ __2.  Porovnání dostupnosti potravin: Kolik je možné si koupit litrů mléka
 __3.  Zdražování potravin: Která kategorie potravin zdražuje nejpomaleji (je u ní nejnižší percentuální meziroční nárůst)?__    
       - Dvě kategorie potravin ve sledovaném období vůbec nezdražily a to "Cukr krystalový", který zlevnil o 1,92% a také "Rajská jablka červená kulatá", která zlevnila o 0,74%.
 __4.  Výrazný nárůst cen: Existuje rok, ve kterém byl meziroční nárůst cen potravin výrazně vyšší než růst mezd (větší než 10 %)?__    
-      - Existuje celkem 63 případů, kdy došlo k výrazně většímu meziročnímu nárůstu ceny určité potraviny vůči růstu průměrné mzdy. První tři příčky obsadily 'Papriky' v roce 2007 (87,91%), 'Konzumní brambory' v roce 2013 (61,1%) a 'Vejce slepičí čerstvá' v roce 2012 (52,15%).
-      - Pokud bychom nerozlišovali jednotlivé potraviny a udělali meziroční nárůst cen všech potravin, pak by roky 2012 a 2013 splňovali podmínku, že byl meziroční nárůst cen potravin výrazně vyšší než růst mezd (větší než 10 %).
+      - Existuje celkem 36 případů, kdy došlo k výrazně většímu meziročnímu nárůstu ceny určité potraviny vůči růstu průměrné mzdy. První tři příčky obsadily 'Papriky' v roce 2007 (87,91%), 'Konzumní brambory' v roce 2013 (61,1%) a 'Vejce slepičí čerstvá' v roce 2012 (52,15%).
+      - Pokud bychom nerozlišovali jednotlivé potraviny a udělali meziroční nárůst cen všech potravin, pak by pouze rok 2012 splňoval podmínku, že byl meziroční nárůst cen potravin výrazně vyšší než růst mezd (větší než 10 %). A to 12.33%.
 __5.  Vliv HDP na mzdy a ceny potravin: Má výška HDP vliv na změny ve mzdách a cenách potravin? Projeví se růst HDP na cenách potravin či mzdách ve stejném nebo následujícím roce výraznějším růstem?__    
       - Po porovnání 
 
