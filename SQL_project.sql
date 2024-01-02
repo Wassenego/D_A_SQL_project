@@ -38,13 +38,21 @@ ORDER BY f.`year`,
 
 -- Vytvoření druhé tabulky
 CREATE OR REPLACE TABLE t_Marek_Sykora_project_SQL_secondary_final
+WITH europian_countries AS (
+	SELECT country
+	FROM countries c 
+	WHERE continent = 'Europe'
+)
 SELECT e.`year`,
+	c.country,
 	e.GDP,
+	e.gini,
 	e.population
-FROM economies e
-WHERE country = 'Czech Republic'
-	AND `year` BETWEEN 2006 AND 2018
-ORDER BY `year`
+FROM europian_countries c
+JOIN economies e ON e.country = c.country
+WHERE `year` BETWEEN 2006 AND 2018
+ORDER BY c.country, 
+	e.`year`
 ;
 
 -- 1.dotaz - 	Rostou v průběhu let mzdy ve všech odvětvích, nebo v některých klesají?
