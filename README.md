@@ -37,7 +37,8 @@ Celkové SQL skripty, včetně průvodní dokumentace a popisu výsledků, jsou 
 
 ## Výzkumné otázky a odpovědi:  
 __1.  Vývoj mezd v odvětvích: Rostou v průběhu let mzdy ve všech odvětvích, nebo v některých klesají?__  
-      -  V některých odvětvích mzdy klesali, obzvláště v několika letech po krizovém roku 2008. Dalším rokem se snižováním platů v celé řadě oblastí byl pak rok 2013.   
+      - V některých odvětvích mzdy i klesali, obzvláště v několika letech po krizovém roku 2008. Dalším rokem se snižováním platů v celé řadě oblastí byl pak rok 2013.  
+      - Odvětví, ve kterých mzdy ve sledovaném období nikdy neklesly jsou: Zpracovatelský průmysl, Zdravotní a sociální péče a Ostatní činnosti.  
 __2.  Porovnání dostupnosti potravin: Kolik je možné si koupit litrů mléka a kilogramů chleba za první a poslední srovnatelné období v dostupných datech cen a mezd?__      
       - Nejméně chleba
 __3.  Zdražování potravin: Která kategorie potravin zdražuje nejpomaleji (je u ní nejnižší percentuální meziroční nárůst)?__    
