@@ -38,15 +38,20 @@ Celkové SQL skripty, včetně průvodní dokumentace a popisu výsledků, jsou 
 ## Výzkumné otázky a odpovědi:  
 __1.  Vývoj mezd v odvětvích: Rostou v průběhu let mzdy ve všech odvětvích, nebo v některých klesají?__  
       - V některých odvětvích mzdy i klesali, obzvláště v několika letech po krizovém roku 2008. Dalším rokem se snižováním platů v celé řadě oblastí byl pak rok 2013.  
-      - Odvětví, ve kterých mzdy ve sledovaném období nikdy neklesly jsou: Zpracovatelský průmysl, Zdravotní a sociální péče a Ostatní činnosti.  
+      - Odvětví, ve kterých mzdy ve sledovaném období nikdy neklesly: Zpracovatelský průmysl, Zdravotní a sociální péče a Ostatní činnosti.  
 __2.  Porovnání dostupnosti potravin: Kolik je možné si koupit litrů mléka a kilogramů chleba za první a poslední srovnatelné období v dostupných datech cen a mezd?__      
-      - Nejméně chleba
+      - Nejméně chleba - průměrně 724kg za měsíc - se dalo koupit v roce 2006 (začátek sledovaného časového období) a to v případě, že jste pracovali v odvětví "Ubytování, stravování a pohostinství". Pokud jste pracovali ve stejném odvětví i v roce 2018 (konec sledovaného období), mohli jste si průměrně koupit o cca 70kg chleba více.  Nicméně nebylo pravidlem, že by se vždy v roce 2018 dalo koupit průměrně více chleba než v roce 2006. Asi u čtvrtiny odvětví kupní síla klesla.  
+      - Nejvíce chleba si mohli koupit zaměstnanci v peněžnictví a pojišťovnictví v roce 2006 a to 2483kg za měsíc.  
+      - Nejméně mléka - 808l - si opět mohli koupit pracovníci z oblasti "Ubytování, stravování a pohostinství" v roce 2006.  
+      - Nejvíce mléka - 2862l - na měsíc si mohli pořídit lidé zaměstnáni v roce 2018 v oblasti "Informační a komunikační činnosti".   
+      - Pouze v jedné oblasti došlo k tomu, že si pracovnící mohli koupit více mléka v roce 2006 než v roce 2018, a to v "Peněžnictví a pojišťovnictví".  
 __3.  Zdražování potravin: Která kategorie potravin zdražuje nejpomaleji (je u ní nejnižší percentuální meziroční nárůst)?__    
-      - V 
+      - Dvě kategorie potravin ve sledovaném období vůbec nezdražily a to "Cukr krystalový", který zlevnil o 1,92% a také "Rajská jablka červená kulatá", která zlevnila o 0,74%.
 __4.  Výrazný nárůst cen: Existuje rok, ve kterém byl meziroční nárůst cen potravin výrazně vyšší než růst mezd (větší než 10 %)?__    
-      - V
+      - Existuje celkem 63 případů, kdy došlo k výrazně většímu meziročnímu nárůstu ceny určité potraviny vůči růstu průměrné mzdy. První tři příčky obsadily 'Papriky' v roce 2007 (87,91%), 'Konzumní brambory' v roce 2013 (61,1%) a 'Vejce slepičí čerstvá' v roce 2012 (52,15%).
+      - Pokud bychom nerozlišovali jednotlivé potraviny a udělali meziroční nárůst cen všech potravin, pak by roky 2012 a 2013 splňovali podmínku, že byl meziroční nárůst cen potravin výrazně vyšší než růst mezd (větší než 10 %).
 __5.  Vliv HDP na mzdy a ceny potravin: Má výška HDP vliv na změny ve mzdách a cenách potravin? Projeví se růst HDP na cenách potravin či mzdách ve stejném nebo následujícím roce výraznějším růstem?__    
-      - V
+      - Po porovnání 
 
 ## Závěr:
 V mém zpracování projektu se celou dobu střetávaly dva pohledy na SQL problematiku a to vytvoření dotazů s detailními výsledky a velkým množství informací a vytvoření dotazů s minimálním počtem informací, ale s co nejkonkrétnějšími výsledky. První řešení by mělo být pro uživatele, který by s informacemi dále pracovali, tvořil reporty, grafy a vyvozovali . Druhé řešení mi přišlo vyhovující pro koncového, i laického, uživatele výsledku. Protože jsem se nedokázal rozhodnout, která z variant je v projektu vyžadována, vytvořil jsem pro první čtyři otázky vždy dvě varianty dotazů. Po  z obou variant vždy 
