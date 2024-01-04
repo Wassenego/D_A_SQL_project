@@ -53,7 +53,7 @@ __4.  Výrazný nárůst cen: Existuje rok, ve kterém byl meziroční nárůst 
       - Pokud bychom nerozlišovali jednotlivé potraviny a udělali meziroční nárůst cen všech potravin, pak nikdy nedošlo k meziročnímu nárůstu cen potravin výrazně vyššímu než růst mezd (větší než 10 %). Maximální hodnota  byla 6.79% v roce 2013.  
 __5.  Vliv HDP na mzdy a ceny potravin: Má výška HDP vliv na změny ve mzdách a cenách potravin? Projeví se růst HDP na cenách potravin či mzdách ve stejném nebo následujícím roce výraznějším růstem?__    
       - Po porovnání meziročního nárůstu cen potravin, platů a HDP jsem našel jen částečné spojení HDP se změnou platů, kdy při vzrůstajícím HDP se zvyšují platy v následujícím roce a opačně. Tato vazba ale rozhodně není stoprocentní.   
-      - Spojitost HDP s cenami mezd jsem žádnou nenašel.   
+      - HDP a nárůst platů nevykazuje žádnou spojitost.     
 
 ## Závěr:  
 V mém zpracování projektu si určitě všimnete, že mám na většinu otázek vypracováno více variant SQL dotazů. Tím, jak se z mi často dařilo zadané otázky interpretovat z různých pohledů jinak, snažil jsem se ve výsledku pokrýt veškeré množiny odpovědí. Případně se snažil dotaz připravit tak, aby při dodatečném upravování otázek např. uživatelem byly výsledky přehlednější. V reálném životě bych ale po zadání otázek předpokládal detailnější komunikaci se zadavatelem k upřesnění požadovaného výsledku a následném vytvoření pouze jednoho perfektního dotazu k otázce. 
