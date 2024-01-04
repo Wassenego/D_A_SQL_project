@@ -1,3 +1,7 @@
+/*Vypracoval: Marek Sýkora
+Discord username: wassenego
+Discord display name: Marek S.*/
+
 -- Vytvoření první tabulky
 CREATE OR REPLACE TABLE t_marek_sykora_project_sql_primary_final AS
 SELECT f.*,
