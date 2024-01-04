@@ -1,8 +1,8 @@
 # SQL projekt
 Datová akademie: 26. 10. 2023 - 25. 1. 2024  
-Vypracoval: Marek Sýkora
-Discord username: wassenego
-Discord display name: Marek S.
+Vypracoval: Marek Sýkora  
+Discord username: wassenego  
+Discord display name: Marek S.  
 
 ## Úvod do projektu:
 Na analytickém oddělení naší nezávislé společnosti, která se zabývá životní úrovní občanů, jsme se dohodli, že se pokusíme odpovědět na pár definovaných výzkumných otázek, které adresují dostupnost základních potravin široké veřejnosti. Kolegové vydefinovali základní otázky, na které se pokusím odpovědět a poskytnout tuto informaci tiskovému oddělení. Toto oddělení bude výsledky prezentovat na následující konferenci zaměřené na tuto oblast.
