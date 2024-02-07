@@ -1,6 +1,7 @@
 /*Vypracoval: Marek Sýkora
 Discord username: wassenego
-Discord display name: Marek S.*/
+Discord display name: Marek S.
+Last version: 7.2.2024 */
 
 -- 5.dotaz - 	Má výška HDP vliv na změny ve mzdách a cenách potravin? Neboli, pokud HDP vzroste výrazněji v jednom roce, projeví se to na cenách potravin či mzdách ve stejném nebo následujícím roce výraznějším růstem?
 SELECT tms.current_year AS `year`,
