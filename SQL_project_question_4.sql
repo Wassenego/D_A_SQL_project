@@ -1,6 +1,7 @@
 /*Vypracoval: Marek Sýkora
 Discord username: wassenego
-Discord display name: Marek S.*/
+Discord display name: Marek S.
+Last version: 7.2.2024 */
 
 -- 4.dotaz - 	Existuje rok, ve kterém byl meziroční nárůst cen potravin výrazně vyšší než růst mezd (větší než 10 %)?
 -- 		Verze, kdy porovnáváme meziroční nárůst cen jednotlivých potravin s průměrným meziročním nárůstem platu společně pro všechna odvětví
