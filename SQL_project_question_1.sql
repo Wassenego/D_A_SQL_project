@@ -1,6 +1,7 @@
 /*Vypracoval: Marek Sýkora
 Discord username: wassenego
-Discord display name: Marek S.*/
+Discord display name: Marek S.
+Last version: 7.2.2024 */
 
 -- 1.dotaz - 	Rostou v průběhu let mzdy ve všech odvětvích, nebo v některých klesají?
 -- 		Varianta s výpisem všech kombinací a se slovním hodnocením  	    	
