@@ -1,6 +1,7 @@
 /*Vypracoval: Marek Sýkora
 Discord username: wassenego
-Discord display name: Marek S.*/
+Discord display name: Marek S.
+Last version: 7.2.2024 */
 
 -- 3.dotaz - 	Která kategorie potravin zdražuje nejpomaleji (je u ní nejnižší percentuální meziroční nárůst)?
 --		Verze s percentuálním meziročním nárůstem jednotlivých potravin pro každý rok - ke kontrole
