@@ -1,6 +1,7 @@
-/*Vypracoval: Marek Sýkora
+/* Vypracoval: Marek Sýkora
 Discord username: wassenego
-Discord display name: Marek S.*/
+Discord display name: Marek S.
+Final version: 7.2.2024 */
 
 -- 2.dotaz - 	Kolik je možné si koupit litrů mléka a kilogramů chleba za první a poslední srovnatelné období v dostupných datech cen a mezd?
 -- 		Verze, kdy ponechám potraviny v řádcích - není tak přehledná, speciálně, pokud by se přidávaly další potraviny, nyní bez použití funkce LIKE
